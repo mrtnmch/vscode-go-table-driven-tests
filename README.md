@@ -30,6 +30,8 @@ func TestExample(t *testing.T) {
 }
 ```
 
+Note that the variable name must be called `tests`, `testCases`, `testItems`, `testWhatevers` etc. (in another words, it must contain the word "test" and end with "s"). This is done to avoid false positives on plain struct declarations.
+
 ## Usage
 
 1. Open a Go test file with table-driven tests

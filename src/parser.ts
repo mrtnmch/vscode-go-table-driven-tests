@@ -29,6 +29,7 @@ export class TableTestParser {
             let currentTestFunction: string | null = null;
             let inTestsSlice = false;
             let braceDepth = 0;
+            let enteredTestBody = false;
 
             for (let i = 0; i < lines.length; i++) {
                 const line = lines[i];
@@ -40,7 +41,7 @@ export class TableTestParser {
                     currentTestFunction = testFuncMatch[1];
                     inTestsSlice = false;
                     braceDepth = 0;
-                    continue;
+                    enteredTestBody = false;
                 }
 
                 if (!currentTestFunction) {
@@ -49,19 +50,22 @@ export class TableTestParser {
 
                 // Track brace depth, but skip strings and comments
                 braceDepth = this.calculateBraceDepth(line, braceDepth);
+                if (!enteredTestBody && braceDepth > 0) {
+                    enteredTestBody = true;
+                }
 
                 // Reset when exiting test function
-                if (braceDepth === 0 && currentTestFunction) {
+                if (enteredTestBody && braceDepth === 0 && currentTestFunction) {
                     currentTestFunction = null;
                     inTestsSlice = false;
                     continue;
                 }
 
                 // Detect start of tests slice (common patterns)
-                if (trimmedLine.match(/tests?\s*:?=\s*\[\]struct\s*\{/) ||
-                    trimmedLine.match(/tests?\s*:?=\s*\[\]\w+\s*\{/) ||
-                    trimmedLine.match(/(?:var\s+)?tests?\s*=\s*\[\]struct\s*\{/) ||
-                    trimmedLine.match(/(?:var\s+)?tests?\s*=\s*\[\]\w+\s*\{/)) {
+                if (trimmedLine.match(/test.*s?\s*:?=\s*\[\]struct\s*\{/) ||
+                    trimmedLine.match(/test.*s?\s*:?=\s*\[\]\w+\s*\{/) ||
+                    trimmedLine.match(/(?:var\s+)?test.*s?\s*=\s*\[\]struct\s*\{/) ||
+                    trimmedLine.match(/(?:var\s+)?test.*s?\s*=\s*\[\]\w+\s*\{/)) {
                     inTestsSlice = true;
                     continue;
                 }

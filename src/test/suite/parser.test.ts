@@ -106,6 +106,81 @@ func TestExample(t *testing.T) {
         assert.strictEqual(testCases[0].name, 'var test');
     });
 
+    test('Should parse table test when helper types exist before tests slice', async () => {
+        const content = `package main
+
+import "testing"
+
+func TestParseNestedTableTest(t *testing.T) {
+    type args struct {
+        str string
+    }
+
+    tests := []struct {
+        name string
+        args args
+        want int
+    }{
+        {
+            name: "case 1",
+            args: args{str: "nested table test"},
+            want: 1,
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {})
+    }
+}`;
+
+        const document = await vscode.workspace.openTextDocument({
+            content,
+            language: 'go'
+        });
+
+        const testCases = parser.parseDocument(document);
+
+        assert.strictEqual(testCases.length, 1);
+        assert.strictEqual(testCases[0].name, 'case 1');
+        assert.strictEqual(testCases[0].testFunction, 'TestParseNestedTableTest');
+    });
+
+    test('Should parse table test when the slice is called testCases', async () => {
+        const content = `package main
+
+import "testing"
+
+func TestParseNestedTableTest(t *testing.T) {
+    testCases := []struct {
+        name string
+        args args
+        want int
+    }{
+        {
+            name: "case 1",
+            args: args{str: "nested table test"},
+            want: 1,
+        },
+    }
+
+    for _, tt := range testCases {
+        t.Run(tt.name, func(t *testing.T) {})
+    }
+}`;
+
+        const document = await vscode.workspace.openTextDocument({
+            content,
+            language: 'go'
+        });
+
+        const testCases = parser.parseDocument(document);
+
+        assert.strictEqual(testCases.length, 1);
+        assert.strictEqual(testCases[0].name, 'case 1');
+        assert.strictEqual(testCases[0].testFunction, 'TestParseNestedTableTest');
+    });
+
+
     test('Should handle empty file', async () => {
         const document = await vscode.workspace.openTextDocument({
             content: '',
