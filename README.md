@@ -7,6 +7,7 @@ A VS Code extension (also compatible with Cursor) that adds support for running 
 - **CodeLens Integration**: Adds "Run" and "Debug" buttons above each table test case
 - **Individual Test Execution**: Run or debug specific test cases from table-driven tests
 - **Automatic Detection**: Automatically detects table-driven test patterns in your Go test files
+- **Go flags and tags support**: Support for Go flags and tags to configure the test run
 
 ## Supported Test Patterns
 
