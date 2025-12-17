@@ -1,0 +1,49 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "*"
+
+permissions:
+  contents: write
+
+jobs:
+  build-test-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Build
+        run: npm run compile
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: xvfb-run -a npm test
+
+      - name: Package VSIX
+        shell: bash
+        run: |
+          TAG_NAME="${GITHUB_REF_NAME}"
+          VSIX_NAME="go-table-driven-tests-${TAG_NAME}.vsix"
+          npx --yes @vscode/vsce package -o "${VSIX_NAME}"
+          echo "VSIX_NAME=${VSIX_NAME}" >> "${GITHUB_ENV}"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          files: ${{ env.VSIX_NAME }}
+
