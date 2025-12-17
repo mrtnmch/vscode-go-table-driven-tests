@@ -8,7 +8,7 @@
     "url": "https://github.com/mrtnmch/vscode-go-table-driven-tests"
   },
   "description": "Run individual table-driven test cases in Go",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "engines": {
     "vscode": "^1.85.0"
   },
