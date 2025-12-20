@@ -1,4 +1,9 @@
-# Go Table-Driven Tests
+<!-- LOGO -->
+<h1>
+<p align="center">
+  <img src="resources/icon.png" alt="Logo" width="128">
+  <br>Go Table-Driven Tests
+</h1>
 
 A VS Code extension (also compatible with Cursor) that adds support for running individual test cases in Go's table-driven tests.
 
@@ -9,7 +14,7 @@ A VS Code extension (also compatible with Cursor) that adds support for running 
 - **Automatic Detection**: Automatically detects table-driven test patterns in your Go test files
 - **Go flags and tags support**: Support for Go flags and tags to configure the test run
 
-## Supported Test Patterns
+## Usage
 
 The extension recognizes common table-driven test patterns:
 
@@ -31,14 +36,11 @@ func TestExample(t *testing.T) {
 }
 ```
 
+![Usage result](resources/usage.png)
+
+### Supported Test Patterns
+
 Note that the variable name must be called `tests`, `testCases`, `testItems`, `testWhatevers` etc. (in another words, it must contain the word "test" and end with "s"). This is done to avoid false positives on plain struct declarations.
-
-## Usage
-
-1. Open a Go test file with table-driven tests
-2. Look for "run test" and "debug test" CodeLens above each test case
-3. Click "run test" to run the specific test case
-4. Click "debug test" to debug the specific test case (requires Go debugger setup)
 
 ## Installation
 

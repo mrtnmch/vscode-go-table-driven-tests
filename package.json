@@ -3,6 +3,7 @@
   "displayName": "Go Table-Driven Tests",
   "author": "Martin Mach",
   "publisher": "mrtnmch",
+  "icon": "resources/icon.png",
   "repository": {
     "type": "git",
     "url": "https://github.com/mrtnmch/vscode-go-table-driven-tests"

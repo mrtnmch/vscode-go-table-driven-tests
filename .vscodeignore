@@ -1,8 +1,22 @@
+.git/**
+.github/**
 .vscode/**
 .vscode-test/**
-src/**
-.gitignore
-tsconfig.json
-**/*.map
-**/*.ts
 node_modules/**
+src/**
+**/*.ts
+**/*.map
+.claude/**
+
+# local artifacts
+*.vsix
+
+# tooling/config not needed at runtime
+.eslintrc.json
+.gitignore
+package-lock.json
+tsconfig.json
+
+# large assets not needed in package
+resources/icon-large.png
+resources/usage.png
