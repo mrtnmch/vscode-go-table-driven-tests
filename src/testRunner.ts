@@ -247,7 +247,6 @@ export class TestRunner {
 
             const filePath = uri.fsPath;
             const fileDir = path.dirname(filePath);
-            const relativePath = path.relative(workspaceFolder.uri.fsPath, fileDir);
 
             // Escape test name for regex matching
             const escapedName = this.escapeRegExp(testCase.name);
